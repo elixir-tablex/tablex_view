@@ -22,7 +22,7 @@ defmodule TablexView.MixProject do
   defp deps do
     [
       {:html_entities, "~> 0.5"},
-      {:tablex, path: "../tablex"}
+      {:tablex, "~> 0.1"}
     ]
   end
 end

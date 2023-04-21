@@ -36,11 +36,21 @@ defmodule TablexView do
 
   defp table_header(table) do
     entry_to_td = fn
-      %{label: label, type: :undefined}, class ->
-        "<th class=#{class}>#{encode(label)}</th>"
+      %{desc: desc, label: label, type: :undefined}, class ->
+        [
+          "<th class=#{class}>",
+          encode(desc || label),
+          "</th>"
+        ]
 
-      %{label: label, type: type}, class ->
-        "<th class=#{class}>#{encode(label)} (#{type |> to_string() |> encode()})</th>"
+      %{desc: desc, label: label, type: type}, class ->
+        [
+          "<th class=#{class}>",
+          encode(desc || label),
+          "<span class=stub-type>(",
+          type |> to_string() |> encode(),
+          ")</span></th>"
+        ]
     end
 
     input_tds =
@@ -69,7 +79,11 @@ defmodule TablexView do
 
   defp table_body(table) do
     entry_to_td = fn value, class ->
-      "<td class=#{class}>#{render_exp(value) |> encode()}</td>"
+      [
+        "<td class=#{class}>",
+        render_exp(value),
+        "</td>"
+      ]
     end
 
     trs =
@@ -89,27 +103,57 @@ defmodule TablexView do
   end
 
   defp render_exp({comp, value}) when comp in ~w[< <= >= >]a do
-    "#{comp}#{value}"
+    "<span class=tbx-op-comp>#{encode(comp)}</span><span class=tbx-exp-int>#{encode(value)}</span>"
   end
 
   defp render_exp(:any) do
-    "-"
+    "<span class=tbx-exp-any>-</span>"
+  end
+
+  defp render_exp(true) do
+    "<span class=tbx-exp-true>Y</span>"
+  end
+
+  defp render_exp(false) do
+    "<span class=tbx-exp-false>N</span>"
   end
 
   defp render_exp(nil) do
-    "null"
+    "<span class=tbx-exp-null>null</span>"
   end
 
   defp render_exp(list) when is_list(list) do
-    Enum.map_join(list, ", ", &render_exp/1)
+    [
+      "<span class=tbx-exp-list>",
+      list
+      |> Stream.map(&render_exp/1)
+      |> Enum.intersperse("<span class=tbx-exp-list-sep>, </span>"),
+      "</span>"
+    ]
   end
 
   defp render_exp(exp) when is_binary(exp) do
-    exp
+    "<span class=tbx-exp-string>#{encode(exp)}</span>"
+  end
+
+  defp render_exp(exp) when is_integer(exp) do
+    [
+      "<span class='tbx-exp-number tbx-exp-int'>",
+      to_string(exp),
+      "</span>"
+    ]
+  end
+
+  defp render_exp(exp) when is_float(exp) do
+    [
+      "<span class='tbx-exp-number tbx-exp-float'>",
+      to_string(exp),
+      "</span>"
+    ]
   end
 
   defp render_exp(exp) do
-    inspect(exp)
+    "<span class=tbx-exp>#{inspect(exp) |> encode()}</span>"
   end
 
   defp merge_cells(trs) do
@@ -122,5 +166,9 @@ defmodule TablexView do
     |> Enum.map(fn {[tr, rn, _, outputs, tr_close], inputs} ->
       [tr, rn, inputs, outputs, tr_close]
     end)
+  end
+
+  def stylesheet do
+    TablexView.Stylesheet.css()
   end
 end

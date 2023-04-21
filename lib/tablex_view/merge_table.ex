@@ -45,7 +45,8 @@ defmodule TablexView.MergeTable do
                 [item]
 
               x when is_integer(x) ->
-                [String.replace(item, "<td ", "<td rowspan=#{x} ")]
+                [td_open | rest] = item
+                [String.replace(td_open, "<td ", "<td rowspan=#{x} ") | rest]
             end
         end
       end)
