@@ -111,11 +111,11 @@ defmodule TablexView do
   end
 
   defp render_exp(true) do
-    "<span class=tbx-exp-true>Y</span>"
+    "<span class=tbx-exp-true>YES</span>"
   end
 
   defp render_exp(false) do
-    "<span class=tbx-exp-false>N</span>"
+    "<span class=tbx-exp-false>NO</span>"
   end
 
   defp render_exp(nil) do
