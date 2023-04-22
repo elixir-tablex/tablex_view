@@ -41,6 +41,10 @@ defmodule TablexView.Stylesheet do
       border-left: double;
     }
 
+    table.tablex td.rule-number + td.output {
+      border-left: double;
+    }
+
     table.tablex th.input + th.output {
       border-left: double;
     }

@@ -152,6 +152,12 @@ defmodule TablexView do
     ]
   end
 
+  defp render_exp({:code, "" <> code}) do
+    """
+    <span class=tbx-code>#{Makeup.highlight(code)}</span>
+    """
+  end
+
   defp render_exp(exp) do
     "<span class=tbx-exp>#{inspect(exp) |> encode()}</span>"
   end
