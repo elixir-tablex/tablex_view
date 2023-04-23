@@ -22,7 +22,7 @@ defmodule TablexView.MixProject do
   defp deps do
     [
       {:html_entities, "~> 0.5"},
-      {:tablex, "~> 0.1"},
+      {:tablex, "~> 0.1.1-alpha.2"},
       {:makeup, "~> 1.1"},
       {:makeup_elixir, ">= 0.0.0"}
     ]

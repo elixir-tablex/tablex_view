@@ -25,7 +25,7 @@ defmodule TablexView.Stylesheet do
       border-color: #DDD;
     }
 
-    table.tablex th {
+    table.tablex.horinzontal th {
       border-bottom: double;
       font-weight: bold;
     }
@@ -57,6 +57,38 @@ defmodule TablexView.Stylesheet do
       color: var(--tablex-rule-number-color);
       border-right: double;
       text-align: center;
+    }
+
+    table.tablex.vertical tbody {
+      border-top: double;
+    }
+
+    table.tablex.vertical tfoot {
+      border-top: double;
+    }
+
+    table.tablex.vertical th.output {
+      border-right: double;
+    }
+
+    table.tablex.vertical th.input {
+      border-right: double;
+    }
+
+    table.tablex.vertical tfoot {
+      background-color: #EEE;
+    }
+
+    table.tablex.vertical td[colspan] {
+      text-align: center;
+    }
+
+    table.tablex.vertical tbody th {
+      text-align: left;
+    }
+
+    table.tablex.vertical tfoot th {
+      text-align: left;
     }
 
     .tbx-exp-true {
