@@ -29,7 +29,7 @@ Output:
 Use the following code to print the CSS styles:
 
 ```elixir
-Tablex.stylesheet()
+TablexView.stylesheet()
 ```
 
 There are a couple of color variables that can be defined:
