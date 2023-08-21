@@ -128,9 +128,11 @@ defmodule TablexView.VerticalView do
   defp render_exp(list) when is_list(list) do
     [
       "<span class=tbx-exp-list>",
+      "<span class=tbx-square-bracket>[</span>",
       list
       |> Stream.map(&render_exp/1)
       |> Enum.intersperse("<span class=tbx-exp-list-sep>, </span>"),
+      "<span class=tbx-square-bracket>]</span>",
       "</span>"
     ]
   end

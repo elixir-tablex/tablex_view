@@ -115,6 +115,10 @@ defmodule TablexView.Stylesheet do
     .tbx-exp-list-sep {
       color: var(--tablex-exp-list-sep-color);
     }
+
+    .tbx-square-bracket {
+      color: var(--tablex-square-bracket-color);
+    }
     """
   end
 end
