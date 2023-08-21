@@ -1,0 +1,202 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Tablex View</title>
+    <style>
+      table.tablex {
+  border: solid;
+  border-spacing: 0;
+}
+
+table.tablex th, table.tablex td {
+  text-transform: none;
+  vertical-align: middle;
+}
+
+table.tablex col.output {
+  background-color: #EEE;
+}
+
+table.tablex, table.tablex th, table.tablex td {
+  border-collapse: collapse;
+}
+
+table.tablex th, table.tablex td {
+  padding: 0.5em;
+  border: 1px solid;
+  border-color: #DDD;
+}
+
+table.tablex.horinzontal th {
+  border-bottom: double;
+  font-weight: bold;
+}
+
+table.tablex th .stub-type {
+  display: block;
+  font-style: italic;
+  font-weight: normal;
+  color: var(--tablex-stub-type-color);
+}
+
+table.tablex td.input + td.output {
+  border-left: double;
+}
+
+table.tablex td.rule-number + td.output {
+  border-left: double;
+}
+
+table.tablex th.input + th.output {
+  border-left: double;
+}
+
+table.tablex th.hit-policy {
+  border-right: double;
+}
+
+table.tablex td.rule-number {
+  color: var(--tablex-rule-number-color);
+  border-right: double;
+  text-align: center;
+}
+
+table.tablex.vertical tbody {
+  border-top: double;
+}
+
+table.tablex.vertical tfoot {
+  border-top: double;
+}
+
+table.tablex.vertical th.output {
+  border-right: double;
+}
+
+table.tablex.vertical th.input {
+  border-right: double;
+}
+
+table.tablex.vertical tfoot {
+  background-color: #EEE;
+}
+
+table.tablex.vertical td[colspan] {
+  text-align: center;
+}
+
+table.tablex.vertical tbody th {
+  text-align: left;
+}
+
+table.tablex.vertical tfoot th {
+  text-align: left;
+}
+
+.tbx-exp-true {
+  font-weight: bold;
+}
+
+.tbx-exp-false {
+  font-weight: normal;
+  font-style: italic;
+}
+
+.tbx-exp-number {
+  color: var(--tablex-exp-number-color);
+}
+
+.tbx-exp-string {
+  color: var(--tablex-exp-string-color);
+}
+
+.tbx-exp-any {
+  color: var(--tablex-exp-any-color);
+}
+
+.tbx-exp-list-sep {
+  color: var(--tablex-exp-list-sep-color);
+}
+
+
+      :root {
+        --tablex-exp-string-color: blue;
+        --tablex-exp-number-color: #aabbcc;
+        --tablex-exp-true-color: #2f6f9f;
+        --tablex-exp-false-color: #f9f2ce;
+        --tablex-exp-any-color: #C0C0C0;
+        --tablex-exp-list-sep-color: #333;
+      }
+
+      table.tablex {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h3>1</h3>
+    <script src="https://bossanova.uk/jspreadsheet/v4/jexcel.js"></script>
+<script src="https://jsuites.net/v4/jsuites.js"></script>
+<link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
+<link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
+
+<div id="spreadsheet"></div>
+
+<script type="text/javascript">
+(function(id, opts) {
+  const el = document.getElementById(id);
+  const options = {...opts, oneditionend: onEdit}
+  const sheet = jspreadsheet(el, options);
+  el.dataset.sheet = sheet;
+
+  function onEdit() {
+    const tablex = toTablex();
+    const event = new CustomEvent("tablex:edited", {
+      bubbles: true,
+      cancelable: true,
+      detail: tablex
+    });
+  }
+
+  function toTablex() {
+    const data = [sheet.getHeaders(true)].concat(sheet.getData());
+    const tablex = data.map(row => row.map(function(value) {
+      if (value === "") { return "-"; }
+      return value;
+    }).join(" ")).join("\n");
+    return tablex;
+  }
+
+})("spreadsheet", {"data":[[1,"-","-","||","5","0","1.0","0","yes","yes","0.75","[BUSY,BUSY_PICKING]","0.75","[BUSY,BUSY_PICKING]","no","no","no","yes","yes","yes","null","gps_tracker","no","no","10000","180000"],[2,"2100","-","||","-","-","-","-","yes","yes","-","-","-","-","-","-","yes","-","-","-","-","-","-","-","-","-"],[3,"-","[2365,2388]","||","-","-","-","-","yes","yes","-","-","-","-","-","-","-","no","no","-","-","-","-","-","-","-"],[4,"-","24706","||","-","-","-","-","-","-","-","-","-","-","-","-","-","no","no","-","-","-","-","-","-","-"],[5,"-","[2336,2343,2393,2454,2736,2772,2774,3151,6462,6463]","||","-","-","-","-","yes","yes","-","-","-","-","yes","-","-","no","no","-","-","-","-","-","-","-"],[6,"-","2399","||","-","-","-","-","yes","yes","-","-","-","-","yes","yes","-","-","-","-","[0,4]","-","-","-","-","-"],[7,"-","[1287,1288,1349,1855,1867,1923,1928,1929,1967,1968,2334,2337,2345,2354,2359,2362,2368,2375,2381,2383,2389,2421,2424,2445,2446,2447,2731,2733,6460,6461,7136,10445,10446,10449,10598,13800,13801,13802,13803,13804,13817,13818,13819,13822,13823,13824,13825,17967,19331,19406,19407,19586,19588,19589,19590,19593,19594,19623,19627,19628,19782,20788,20789,20792,20793,20794,20795,20796,20797,20798,20799,21212,21214,21368,22648,22650,22706,22717,22719,24162,24184,24185,24246,24247,24253,24273,24292,24501,24509,24542,24544,24545]","||","-","-","-","-","yes","yes","-","-","-","-","yes","-","-","-","-","-","-","-","-","-","-","-"],[8,"-","[2363,2366,2687,2734,2738,2855,6750,6773,6833,17762]","||","-","-","-","-","yes","yes","-","-","-","-","yes","-","-","yes","yes","-","-","-","-","-","-","-"],[9,"-","[1352,1992,1993,2009,2010,2011,2012,2013,2041,2042,2043,2044,2339,2340,2350,2367,2376,2377,2380,2385,2390,2391,2400,2402,2404,2407,2408,2418,2419,2426,2427,2428,2438,2439,2441,2443,2444,2448,2452,2453,2515,2519,2593,2595,2601,2664,2667,2673,2675,2677,2678,2679,2680,2681,2683,2685,2688,2732,2768,2769,2770,2771,2773,2851,2852,2853,2860,2861,2865,2867,2868,2869,2954,2955,2957,2959,2960,2973,2974,3014,3015,3017,3020,3021,3022,3023,3058,3059,3061,3063,3064,3065,3079,3080,3110,3112,3149,3214,3217,3219,3220,3221,3258,4859,5390,5391,5393,5394,5727,5732,5734,5739,5745,6467,6468,6470,6471,6472,6474,6580,6606,6607,6608,6703,6707,6717,6754,6760,6761,6762,6815,7114,7118,7130,7131,7133,7139,7140,7634,7635,7639,8868,10098,10213,10437,10580,12874,19213,19403,24123,24125]","||","-","-","-","-","yes","yes","-","-","-","-","yes","yes","-","no","no","-","-","-","-","-","-","-"],[10,"-","[2341,2347,2348,2361,2396,2435,2436,2440,2468,2668,2682,2735,2737,2854,2858,2859,2862,2863,2864,2866,2870,3111,6469,6724,6749,6751,7116,10200,12859]","||","-","-","-","-","yes","yes","-","-","-","-","yes","yes","-","yes","yes","-","-","-","-","-","-","-"],[11,"-","[2398,2401,2403,2405,2409,2411,2412,2423,2425,2429,2430,2674,2676,2686,3218,3259,10436]","||","-","-","-","-","yes","yes","-","-","-","-","yes","yes","-","-","-","-","-","-","-","-","-","-"],[12,"-","[1991,2039,2040,2338,2342,2351,2358,2369,2382,2384,2392,2433,2463,2469,2471,2518,2599,2600,2663,2665,2670,2672,2684,2856,2857,3108,3257,3794,3825,5388,5389,6473,6476,6769,6816,7637,8345,8346,12610,20879,22514,22764,22765,22908,24080,24113]","||","-","-","-","-","yes","yes","-","-","-","-","-","yes","-","no","no","-","-","-","-","-","-","-"],[13,"-","[2413,2420,6677]","||","-","-","-","-","yes","yes","-","-","-","-","-","yes","-","-","-","-","-","-","-","-","-","-"],[14,"-","[2417,6768]","||","-","-","-","-","yes","yes","-","-","-","-","yes","yes","-","no","no","-","-","-","-","-","0.3","-"],[15,"-","[2053,3018]","||","-","-","-","-","yes","yes","-","-","-","-","yes","yes","-","-","-","-","-","-","-","-","0.3","-"],[16,"-","18822","||","-","-","-","90","yes","yes","-","-","-","-","yes","-","-","-","-","-","-","-","yes","-","-","-"],[17,"-","[22916,22917]","||","-","-","-","60","yes","yes","-","-","-","-","-","-","-","-","-","-","-","-","yes","-","0.3","1140000"],[18,"-","[1769,1776,1782,1800]","||","-","-","-","-","yes","yes","-","-","-","-","-","-","-","-","-","-","-","-","-","-","0.3","-"],[19,"-","[1846,1901]","||","-","-","-","300","yes","yes","-","-","-","-","yes","-","-","-","-","-","-","-","-","-","-","-"],[20,"-","1795","||","-","-","-","90","yes","yes","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-"],[21,"-","24706","||","-","-","-","-","no","no","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-","-"]],"columns":[{"type":"numeric","title":"R"},{"type":"text","title":"target.company_id","width":100},{"type":"text","title":"target.store_id","width":100},{"name":"separator","type":"text","title":"||","width":14,"readOnly":true},{"type":"numeric","title":"zoe.nb_iterations","width":100},{"type":"text","title":"zoe.deadline","width":100},{"type":"numeric","title":"order_injection.picking_completion_threshold","width":100},{"type":"text","title":"order_injection.delivery_assignment_deadline","width":100},{"type":"dropdown","title":"order_injection.picking","width":100,"source":["yes","no","-"]},{"type":"dropdown","title":"order_injection.delivery","width":100,"source":["yes","no","-"]},{"type":"text","title":"saturation.picking.thr","width":100},{"type":"text","title":"saturation.picking.user_status_to_filter","width":100},{"type":"text","title":"saturation.delivery.thr","width":100},{"type":"text","title":"saturation.delivery.user_status_to_filter","width":100},{"type":"dropdown","title":"slot_reservation","width":100,"source":["yes","no","-"]},{"type":"dropdown","title":"multislot","width":100,"source":["yes","no","-"]},{"type":"dropdown","title":"correct_delivery_window","width":100,"source":["yes","no","-"]},{"type":"dropdown","title":"break_batches.picking","width":100,"source":["yes","no","-"]},{"type":"dropdown","title":"break_batches.delivery","width":100,"source":["yes","no","-"]},{"type":"dropdown","title":"break_batches.rollback","width":100,"source":["yes","no","-"]},{"type":"text","title":"break_batches.ignore_if_hour_between","width":100},{"type":"text","title":"gps_provider","width":100},{"type":"text","title":"filter_on_hold_quests","width":100},{"type":"dropdown","title":"filter_users.base_on_distance","width":100,"source":["yes","no","-"]},{"type":"text","title":"filter_users.km","width":100},{"type":"text","title":"time_assignation_reminder_alert","width":100}],"freezeColumns":1})
+</script>
+
+    <h3>2</h3>
+    <table class="tablex horizontal"><colgroup>
+<col span="1" class="rule-number">
+<col span="3" class="input">
+<col span="2" class="output">
+</colgroup>
+<thead><tr><th class="hit-policy hit-policy-F">F</th><th class=input>Product Category</th><th class=input>Competitor Pricing</th><th class=input>Product Features</th><th class=output>Launch Decision</th><th class=output>Reasoning</th></tr></thead><tbody><tr><td class=rule-number>1</td><td rowspan=2 contenteditable="true" class="input"><span class=tbx-exp-string>Electronics</span></td><td contenteditable="true" class="input"><span class=tbx-exp-string>Higher than Competitor</span></td><td contenteditable="true" class="input"><span class=tbx-exp-string>More Features</span></td><td contenteditable="true" class="output"><span class=tbx-exp-string>Launch</span></td><td contenteditable="true" class="output"><span class=tbx-exp-string>Competitive Advantage</span></td></tr><tr><td class=rule-number>2</td><td contenteditable="true" class="input"><span class=tbx-exp-string>Lower than Competitor</span></td><td contenteditable="true" class="input"><span class=tbx-exp-string>Same Features</span></td><td contenteditable="true" class="output"><span class=tbx-exp-string>Launch</span></td><td contenteditable="true" class="output"><span class=tbx-exp-string>Price Advantage</span></td></tr><tr><td class=rule-number>3</td><td contenteditable="true" class="input"><span class=tbx-exp-string>Fashion</span></td><td contenteditable="true" class="input"><span class=tbx-exp-string>Same as Competitor</span></td><td contenteditable="true" class="input"><span class=tbx-exp-string>New Features</span></td><td contenteditable="true" class="output"><span class=tbx-exp-string>Do Not Launch</span></td><td contenteditable="true" class="output"><span class=tbx-exp-string>Lack of Differentiation</span></td></tr></tbody></table>
+    <h3>3</h3>
+    <table class="tablex horizontal"><colgroup>
+<col span="1" class="rule-number">
+<col span="3" class="input">
+<col span="2" class="output">
+</colgroup>
+<thead><tr><th class="hit-policy hit-policy-F">F</th><th class=input>Product Category</th><th class=input>Competitor Pricing</th><th class=input>Product Features</th><th class=output>Launch Decision</th><th class=output>Reasoning</th></tr></thead><tbody><tr><td class=rule-number>1</td><td rowspan=2 contenteditable="true" class="input"><span class=tbx-exp-string>Electronics</span></td><td contenteditable="true" class="input"><span class=tbx-exp-string>Higher than Competitor</span></td><td contenteditable="true" class="input"><span class=tbx-exp-string>More Features</span></td><td contenteditable="true" class="output"><span class=tbx-exp-string>Launch</span></td><td contenteditable="true" class="output"><span class=tbx-exp-string>Competitive Advantage</span></td></tr><tr><td class=rule-number>2</td><td contenteditable="true" class="input"><span class=tbx-exp-string>Lower than Competitor</span></td><td contenteditable="true" class="input"><span class=tbx-exp-string>Same Features</span></td><td contenteditable="true" class="output"><span class=tbx-exp-string>Launch</span></td><td contenteditable="true" class="output"><span class=tbx-exp-string>Price Advantage</span></td></tr><tr><td class=rule-number>3</td><td contenteditable="true" class="input"><span class=tbx-exp-string>Fashion</span></td><td contenteditable="true" class="input"><span class=tbx-exp-string>Same as Competitor</span></td><td contenteditable="true" class="input"><span class=tbx-exp-string>New Features</span></td><td contenteditable="true" class="output"><span class=tbx-exp-string>Do Not Launch</span></td><td contenteditable="true" class="output"><span class=tbx-exp-string>Lack of Differentiation</span></td></tr></tbody></table>
+    <h3>4</h3>
+    <table class="tablex horizontal"><colgroup>
+<col span="1" class="rule-number">
+<col span="2" class="input">
+<col span="1" class="output">
+</colgroup>
+<thead><tr><th class="hit-policy hit-policy-F">F</th><th class=input>Day<span class=stub-type>(string)</span></th><th class=input>Weather<span class=stub-type>(string)</span></th><th class=output>Activity</th></tr></thead><tbody><tr><td class=rule-number>1</td><td rowspan=2 contenteditable="true" class="input"><span class=tbx-exp-list><span class=tbx-exp-string>Monday</span><span class=tbx-exp-list-sep>, </span><span class=tbx-exp-string>Tuesday</span><span class=tbx-exp-list-sep>, </span><span class=tbx-exp-string>Wednesday</span><span class=tbx-exp-list-sep>, </span><span class=tbx-exp-string>Thursday</span></span></td><td contenteditable="true" class="input"><span class=tbx-exp-string>rainy</span></td><td contenteditable="true" class="output"><span class=tbx-exp-string>read</span></td></tr><tr><td class=rule-number>2</td><td contenteditable="true" class="input"><span class=tbx-exp-any>-</span></td><td contenteditable="true" class="output"><span class=tbx-exp-list><span class=tbx-exp-string>read</span><span class=tbx-exp-list-sep>, </span><span class=tbx-exp-string>walk</span></span></td></tr><tr><td class=rule-number>3</td><td rowspan=2 contenteditable="true" class="input"><span class=tbx-exp-string>Friday</span></td><td contenteditable="true" class="input"><span class=tbx-exp-string>sunny</span></td><td contenteditable="true" class="output"><span class=tbx-exp-string>soccer</span></td></tr><tr><td class=rule-number>4</td><td contenteditable="true" class="input"><span class=tbx-exp-any>-</span></td><td contenteditable="true" class="output"><span class=tbx-exp-string>swim</span></td></tr><tr><td class=rule-number>5</td><td contenteditable="true" class="input"><span class=tbx-exp-string>Saturday</span></td><td contenteditable="true" class="input"><span class=tbx-exp-any>-</span></td><td contenteditable="true" class="output"><span class=tbx-exp-list><span class=tbx-exp-string>watch movie</span><span class=tbx-exp-list-sep>, </span><span class=tbx-exp-string>games</span></span></td></tr><tr><td class=rule-number>6</td><td contenteditable="true" class="input"><span class=tbx-exp-string>Sunday</span></td><td contenteditable="true" class="input"><span class=tbx-exp-any>-</span></td><td contenteditable="true" class="output"><span class=tbx-exp-null>null</span></td></tr></tbody></table>
+    <h3>5</h3>
+    <table class="tablex horizontal"><colgroup>
+<col span="1" class="rule-number">
+<col span="1" class="input">
+<col span="1" class="output">
+</colgroup>
+<thead><tr><th class="hit-policy hit-policy-F">F</th><th class=input>brand_id<span class=stub-type>(integer)</span></th><th class=output>attempts</th></tr></thead><tbody><tr><td class=rule-number>1</td><td contenteditable="true" class="input"><span class='tbx-exp-number tbx-exp-int'>700</span></td><td contenteditable="true" class="output"><span class='tbx-exp-number tbx-exp-int'>3</span></td></tr><tr><td class=rule-number>2</td><td contenteditable="true" class="input"><span class='tbx-exp-number tbx-exp-int'>152</span></td><td contenteditable="true" class="output"><span class='tbx-exp-number tbx-exp-int'>4</span></td></tr><tr><td class=rule-number>3</td><td contenteditable="true" class="input"><span class='tbx-exp-number tbx-exp-int'>153</span></td><td contenteditable="true" class="output"><span class='tbx-exp-number tbx-exp-int'>2</span></td></tr><tr><td class=rule-number>4</td><td contenteditable="true" class="input"><span class=tbx-exp-list><span class='tbx-exp-number tbx-exp-int'>150</span><span class=tbx-exp-list-sep>, </span><span class='tbx-exp-number tbx-exp-int'>131</span></span></td><td contenteditable="true" class="output"><span class='tbx-exp-number tbx-exp-int'>3</span></td></tr><tr><td class=rule-number>4</td><td contenteditable="true" class="input"><span class=tbx-exp-list><span class='tbx-exp-number tbx-exp-int'>126</span><span class=tbx-exp-list-sep>, </span><span class='tbx-exp-number tbx-exp-int'>136</span></span></td><td contenteditable="true" class="output"><span class='tbx-exp-number tbx-exp-int'>3</span></td></tr><tr><td class=rule-number>5</td><td contenteditable="true" class="input"><span class=tbx-exp-any>-</span></td><td contenteditable="true" class="output"><span class=tbx-exp-false>no</span></td></tr></tbody></table>
+  </body>
+</html>

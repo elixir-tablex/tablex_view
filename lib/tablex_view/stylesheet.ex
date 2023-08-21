@@ -1,5 +1,5 @@
 defmodule TablexView.Stylesheet do
-  def css do
+  def css(_opts \\ []) do
     """
     table.tablex {
       border: solid;
