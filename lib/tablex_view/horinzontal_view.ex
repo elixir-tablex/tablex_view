@@ -5,8 +5,8 @@ defmodule TablexView.HorizontalView do
   @doc """
   Render a table into HTML string.
   """
-  @spec render(Table.t()) :: String.t()
-  def render(%Table{} = table) do
+  @spec render(Table.t(), TablexView.options()) :: String.t()
+  def render(%Table{} = table, _opts \\ []) do
     [
       ~S'<table class="tablex horizontal">',
       """
@@ -59,17 +59,15 @@ defmodule TablexView.HorizontalView do
     ]
   end
 
-  for {hit_policy, text} <- Tablex.HitPolicy.hit_policies() do
-    defp render_hit_policy(unquote(hit_policy)) do
-      text = unquote(text)
-      ~s'<th class="hit-policy hit-policy-#{text}">#{text}</th>'
-    end
+  defp render_hit_policy(hp) do
+    text = TablexView.Renderer.HitPolicy.render_hit_policy(hp)
+    ~s'<th class="hit-policy hit-policy-#{text}">#{text}</th>'
   end
 
   defp table_body(table) do
     entry_to_td = fn value, class ->
       [
-        "<td class=#{class}>",
+        ~s'<td class="#{class}">',
         render_exp(value),
         "</td>"
       ]
@@ -100,11 +98,11 @@ defmodule TablexView.HorizontalView do
   end
 
   defp render_exp(true) do
-    "<span class=tbx-exp-true>YES</span>"
+    "<span class=tbx-exp-true>yes</span>"
   end
 
   defp render_exp(false) do
-    "<span class=tbx-exp-false>NO</span>"
+    "<span class=tbx-exp-false>no</span>"
   end
 
   defp render_exp(nil) do
