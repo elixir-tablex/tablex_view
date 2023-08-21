@@ -23,11 +23,12 @@ defmodule TablexView.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:tablex, "~> 0.3"},
       {:html_entities, "~> 0.5"},
-      {:tablex, "~> 0.3.1"},
       {:makeup, "~> 1.1"},
       {:makeup_elixir, ">= 0.0.0"},
-      {:ex_doc, "~> 0.30", only: :dev, runtime: false}
+      {:ex_doc, "~> 0.30", only: :dev, runtime: false},
+      {:jason, "~> 1.4"}
     ]
   end
 
