@@ -92,7 +92,7 @@ defmodule TablexView.HorizontalView do
   end
 
   defp render_exp({comp, value}) when comp in ~w[< <= >= >]a do
-    "<span class=tbx-op-comp>#{encode(comp)}</span><span class=tbx-exp-int>#{encode(value)}</span>"
+    "<span class=tbx-op-comp>#{comp |> to_string() |> encode()}</span><span class=tbx-exp-int>#{render_exp(value)}</span>"
   end
 
   defp render_exp(:any) do
