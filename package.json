@@ -1,0 +1,21 @@
+{
+  "name": "tablex_view",
+  "version": "0.1.0",
+  "description": "Interactive editor for Tablex, a Decision Table implementation.",
+  "license": "MIT",
+  "module": "./priv/static/tablex-editor.mjs",
+  "exports": {
+    "import": "./priv/static/tablex-editor.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/elixir-tablex/tablex_view.git"
+  },
+  "author": "qhwa <qhwa@pnq.cc> (https://q-the-hacker.com)",
+  "files": [
+    "README.md",
+    "LICENSE.md",
+    "package.json",
+    "priv/static/*"
+  ]
+}

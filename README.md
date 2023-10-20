@@ -55,6 +55,52 @@ def deps do
 end
 ```
 
+## Interactive Spreadsheet-like Editor
+
+With editor you can modify the table in the browswer.
+
+### Example setup in a Phoenix project
+
+Add the following into your html template:
+
+```html
+<link phx-track-static rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
+<link phx-track-static rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
+
+<script defer src="https://bossanova.uk/jspreadsheet/v4/jexcel.js"></script>
+<script defer src="https://jsuites.net/v4/jsuites.js"></script>
+
+<div id="my-tablex-editor-container" phx-update="ignore">
+  <%= my_table.code |> Tablex.new() |> TablexView.render(mode: :editor, id: "my-tablex-editor") |> raw() %>
+</div>
+```
+
+Add the following into your JavaScript file:
+
+```js
+import { initTablexEditors } from 'tablex_view';
+
+initTablexEditors();
+```
+
+You can listen to the updates with:
+
+```js
+document.addEventListener('tablex:update', evt => {
+  const tablex = evt.detail.data;
+  ...
+});
+```
+
+You can get the data using:
+
+```js
+import { getTablex } from 'tablex_view';
+
+getTablex('my-tablex-editor');
+```
+
+
 Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
 and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
 be found at <https://hexdocs.pm/tablex_view>.

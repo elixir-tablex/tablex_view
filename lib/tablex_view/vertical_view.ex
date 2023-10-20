@@ -17,8 +17,8 @@ defmodule TablexView.VerticalView do
   Reasoning            || "Competitive Advantage"  "Price Advantage"       "Lack of Differentiation"
   """
 
-  @spec render(Table.t()) :: String.t()
-  def render(%Table{} = table) do
+  @spec render(Table.t(), TablexView.options()) :: String.t()
+  def render(%Table{} = table, _opts) do
     [
       ~S'<table class="tablex vertical">',
       table_header(table),
