@@ -7,6 +7,7 @@ defmodule TablexView.VerticalView do
   @doc """
   Render a table into HTML string.
 
+  ```tablex
   ====
   F                    || 1                        2                       3
   "Product Category"   || Electronics              "Home Goods"            Fashion
@@ -15,6 +16,7 @@ defmodule TablexView.VerticalView do
   ====
   "Launch Decision"    || Launch                   Launch                  "Do Not Launch"
   Reasoning            || "Competitive Advantage"  "Price Advantage"       "Lack of Differentiation"
+  ```
   """
 
   @spec render(Table.t()) :: String.t()
